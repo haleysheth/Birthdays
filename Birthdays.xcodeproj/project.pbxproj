@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		BDF12A552E33DA0E005C4D9B /* editFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF12A542E33DA0E005C4D9B /* editFriendView.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		BDF12A442E33C4F5005C4D9B /* Birthdays.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Birthdays.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDF12A542E33DA0E005C4D9B /* editFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editFriendView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +37,7 @@
 		BDF12A3B2E33C4F5005C4D9B = {
 			isa = PBXGroup;
 			children = (
+				BDF12A542E33DA0E005C4D9B /* editFriendView.swift */,
 				BDF12A462E33C4F5005C4D9B /* Birthdays */,
 				BDF12A452E33C4F5005C4D9B /* Products */,
 			);
@@ -119,6 +125,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDF12A552E33DA0E005C4D9B /* editFriendView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

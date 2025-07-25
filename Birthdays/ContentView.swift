@@ -14,46 +14,66 @@ struct ContentView: View {
     
     @State private var newName = ""
     @State private var newBirthday = Date.now
+    @State private var selectedFriend : Friend?
     
-  var body: some View {
-    NavigationStack{
-      List(friends){ friend in
-        HStack{
-          Text(friend.name)
-          Spacer()
-          Text(friend.birthday, format: .dateTime.month(.wide).day().year())
+    var body: some View {
+        NavigationStack{
+            List {
+                ForEach(friends) { friend in
+                    HStack{
+                        Text(friend.name)
+                        Spacer()
+                        Text(friend.birthday, format: .dateTime.month(.wide).day().year())
+                    }
+                    .onTapGesture {
+                        selectedFriend = friend
+                    }
+            }
+            .onDelete(perform: deleteFriend)
+                
+            }
+            //Text("hi")
+            .navigationTitle("Birthdays")
+            .sheet(item: $selectedFriend){friend in
+                NavigationStack{
+                    editFriendView(friend : friend)
+                }
+            }
+            .safeAreaInset(edge : .bottom){
+                VStack(alignment: .center, spacing: 20){
+                    Text("New Birthday")
+                        .font(.headline)
+                    DatePicker(selection: $newBirthday, in: Date.distantPast...Date.now, displayedComponents: .date){
+                        TextField("Name", text:$newName)
+                            .textFieldStyle(.roundedBorder)
+                    }
+                    
+                    Button("Save") {
+                        let newFriend = Friend(name: newName, birthday: newBirthday)
+                        context.insert(newFriend)
+                        
+                        newName = ""
+                        newBirthday = .now
+                    }
+                    .bold()
+                    
+                    
+                }
+                .padding()
+                .background(.bar)
+                
+            }
         }
-      }
-      //Text("hi")
-      .navigationTitle("Birthdays")
-      .safeAreaInset(edge : .bottom){
-          VStack(alignment: .center, spacing: 20){
-              Text("New Birthday")
-                  .font(.headline)
-              DatePicker(selection: $newBirthday, in: Date.distantPast...Date.now, displayedComponents: .date){
-                  TextField("Name", text:$newName)
-                      .textFieldStyle(.roundedBorder)
-              }
-              
-              Button("Save") {
-                  let newFriend = Friend(name: newName, birthday: newBirthday)
-                  context.insert(newFriend)
-                  
-                  newName = ""
-                  newBirthday = .now
-              }
-              .bold()
-              
-            
-          }
-          .padding()
-          .background(.bar)
-          
-      }
     }
-  }
+    func deleteFriend(at offsets: IndexSet) {
+        for index in offsets {
+            let friendToDelete = friends[index]
+            context.delete(friendToDelete)
+        }
+    }
 }
-#Preview {
-  ContentView()
-        .modelContainer(for: Friend.self, inMemory: true)
-}
+        
+        #Preview {
+            ContentView()
+                .modelContainer(for: Friend.self, inMemory: true)
+        }
